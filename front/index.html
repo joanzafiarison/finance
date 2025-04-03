@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Investment Portfolio Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="min-h-screen flex flex-col">
+        <header class="bg-white border-b border-gray-200">            <nav class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">                        <img src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Logo" class="h-8 w-auto">
+                    </div>                    <div class="flex items-center">
+                        <button class="p-2 rounded-full hover:bg-gray-100">
+                            <i class="fas fa-user-circle text-2xl text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-1 max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">            <div class="mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="grid grid-cols-2 gap-6">                        <div>
+                            <h2 class="text-2xl font-semibold text-gray-900">Portfolio Value</h2>
+                            <p class="mt-2 text-4xl font-bold text-custom">$247,582.64</p>
+                            <p class="text-green-600 text-sm font-medium mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>
+                                +2.4% today
+                            </p>
+                        </div>
+                        <div>                            <h2 class="text-2xl font-semibold text-gray-900">Annual Dividend</h2>
+                            <p class="mt-2 text-4xl font-bold text-custom">$8,426.12</p>
+                            <p class="text-gray-600 text-sm font-medium mt-1">
+                                <i class="fas fa-calendar mr-1"></i>
+                                Projected for 2024
+                            </p>
+                        </div>
+                    </div>                </div>
+            </div>
+
+            <div class="grid grid-cols-5 gap-8">
+                <div class="col-span-3">                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-4 border-b border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-900">Assets</h3>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <div class="p-4 hover:bg-gray-50 cursor-pointer" onclick="showOverlay()">                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">AAPL</h4>
+                                        <p class="text-sm text-gray-600">Apple Inc.</p>
+                                    </div>                                    <div class="text-right">
+                                        <p class="font-semibold text-gray-900">$182.63</p>
+                                        <p class="text-sm text-green-600">+1.24%</p>
+                                    </div>                                </div>
+                                <div class="mt-4" id="sparkline1"></div>
+                            </div>                            <div class="p-4 hover:bg-gray-50 cursor-pointer">
+                                <div class="flex items-center justify-between">                                    <div>
+                                        <h4 class="font-semibold text-gray-900">MSFT</h4>                                        <p class="text-sm text-gray-600">Microsoft Corporation</p>
+                                    </div>                                    <div class="text-right">
+                                        <p class="font-semibold text-gray-900">$378.92</p>
+                                        <p class="text-sm text-red-600">-0.32%</p>
+                                    </div>                                </div>
+                                <div class="mt-4" id="sparkline2"></div>
+                            </div>                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2">
+                    <div class="bg-white rounded-lg shadow p-6">                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Dividend Distribution</h3>
+                        <div id="dividendChart" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden">        <div class="bg-white rounded-lg max-w-6xl mx-auto mt-20 p-6">
+            <div class="flex justify-between items-center mb-6">                <h2 class="text-2xl font-semibold text-gray-900">AAPL - Apple Inc.</h2>
+                <button onclick="hideOverlay()" class="text-gray-500 hover:text-gray-700">                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-4 gap-8">                <div class="col-span-3">
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <div class="flex space-x-4">                            <button class="!rounded-button bg-custom text-white px-4 py-2">1D</button>
+                            <button class="!rounded-button bg-gray-200 text-gray-700 px-4 py-2">1W</button>
+                            <button class="!rounded-button bg-gray-200 text-gray-700 px-4 py-2">1M</button>
+                            <button class="!rounded-button bg-gray-200 text-gray-700 px-4 py-2">1Y</button>
+                            <button class="!rounded-button bg-gray-200 text-gray-700 px-4 py-2">3Y</button>
+                            <button class="!rounded-button bg-gray-200 text-gray-700 px-4 py-2">5Y</button>
+                        </div>
+                    </div>
+                    <div id="detailChart" style="height: 400px;"></div>
+                </div>
+                <div>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">Market Cap</h4>
+                            <p class="text-lg font-semibold text-gray-900">$2.85T</p>
+                        </div>                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">P/E Ratio</h4>
+                            <p class="text-lg font-semibold text-gray-900">30.24</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">Dividend Yield</h4>
+                            <p class="text-lg font-semibold text-gray-900">0.51%</p>
+                        </div>                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">52 Week High</h4>
+                            <p class="text-lg font-semibold text-gray-900">$198.23</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">52 Week Low</h4>
+                            <p class="text-lg font-semibold text-gray-900">$124.17</p>
+                        </div>                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showOverlay() {
+            document.getElementById('overlay').classList.remove('hidden');
+        }
+
+        function hideOverlay() {
+            document.getElementById('overlay').classList.add('hidden');
+        }
+
+        // Initialize charts
+        const sparkline1 = echarts.init(document.getElementById('sparkline1'));
+        const sparkline2 = echarts.init(document.getElementById('sparkline2'));
+        const dividendChart = echarts.init(document.getElementById('dividendChart'));
+        const detailChart = echarts.init(document.getElementById('detailChart'));
+
+        // Sparkline options
+        const sparklineOption = {
+            animation: false,
+            grid: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0
+            },
+            xAxis: {
+                type: 'category',
+                show: false
+            },
+            yAxis: {
+                type: 'value',
+                show: false
+            },
+            series: [{
+                data: [120, 132, 101, 134, 90, 230, 210],
+                type: 'line',
+                smooth: true,
+                symbol: 'none',
+                lineStyle: {
+                    color: '#4F46E5'
+                },
+                areaStyle: {
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(79, 70, 229, 0.2)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(79, 70, 229, 0)'
+                        }]
+                    }
+                }
+            }]
+        };
+
+        sparkline1.setOption(sparklineOption);
+        sparkline2.setOption(sparklineOption);
+
+        // Dividend chart options
+        const dividendOption = {
+            animation: false,
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [{
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '16',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: 1048, name: 'AAPL' },
+                    { value: 735, name: 'MSFT' },
+                    { value: 580, name: 'GOOGL' },
+                    { value: 484, name: 'AMZN' },
+                    { value: 300, name: 'META' }
+                ]
+            }]
+        };
+
+        dividendChart.setOption(dividendOption);
+
+        // Detail chart options
+        const detailOption = {
+            animation: false,
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                smooth: true
+            }]
+        };
+
+        detailChart.setOption(detailOption);
+
+        // Resize charts on window resize
+        window.addEventListener('resize', function() {
+            sparkline1.resize();
+            sparkline2.resize();
+            dividendChart.resize();
+            detailChart.resize();
+        });
+    </script>
+</body>
+</html>
