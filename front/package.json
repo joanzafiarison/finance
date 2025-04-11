@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc build && webpack serve --open --mode development",
+    "develop": "webpack-dev-server --mode development"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "echarts": "^5.6.0",
+    "echarts-for-react": "^3.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
