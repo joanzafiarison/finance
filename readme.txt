@@ -84,3 +84,9 @@ npm install webpack webpack-cli webpack-dev-server html-webpack-plugin clean-web
 
 
 configuration de webpack.config.js pour fonctionner avec css et typescript
+
+
+
+COmment démarrer : 
+
+flask --app app run
